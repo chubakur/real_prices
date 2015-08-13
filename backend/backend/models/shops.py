@@ -18,5 +18,4 @@ class Shop(models.Model):
         return {'name': self.name,
                 'description': self.description,
                 'url': self.url,
-                'logo': self.logo,
-                'created': self.created}
+                'logo': self.logo}

@@ -14,8 +14,8 @@
 
   </head>
   <body ng-controller="IndexController">
-    <h1>Список магазинов {{ test }}</h1>
-
+    <h1>Список магазинов</h1>
+    <div ng-repeat="shop in shops"><img src="{{ shop.logo }}"/></div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
