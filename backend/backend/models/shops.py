@@ -37,6 +37,14 @@ class Product(models.Model):
     def __unicode__(self):
         return str(self)
 
+    def data(self):
+        return {
+            'name': self.name,
+            'description': self.description,
+            'url': self.url,
+            'logo': self.logo
+        }
+
 
 class Price(models.Model):
     product = models.ForeignKey(Product)
@@ -44,8 +52,8 @@ class Price(models.Model):
     price = models.FloatField()
     price2 = models.FloatField()
 
-    def __str__(self):
-        return self.name
-
-    def __unicode__(self):
-        return str(self)
+    def data(self):
+        return {
+            'price': self.price,
+            'price2': self.price2
+        }

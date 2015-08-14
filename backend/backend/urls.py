@@ -19,6 +19,7 @@ import api
 
 
 urlpatterns = [
+    url(r'^products', api.products_in_shop),
     url(r'^shops', api.shops),
     url(r'^admin/', include(admin.site.urls)),
 ]
