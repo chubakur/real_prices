@@ -1,1 +1,1 @@
-from shops import Shop
+from shops import Shop, Product, Price

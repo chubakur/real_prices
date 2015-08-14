@@ -14,8 +14,34 @@
 
   </head>
   <body ng-controller="IndexController">
-    <h1>Список магазинов</h1>
-    <div ng-repeat="shop in shops"><img src="{{ shop.logo }}"/></div>
+    <div ng-show="mode == 'choose_shop'">
+        <h1>Список магазинов</h1>
+        <div ng-show="connection_error" class="alert alert-danger" role="alert">Ошибка соединения с сервером: {{ connection_error_message }}</div>
+        <div ng-repeat="shop in shops"  class="row">
+            <a href class="thumbnail col-md-4" ng-click="choose_shop(shop.id, shop.name)">
+                <img src="{{ shop.logo }}"/>
+            </a>
+            <div class="col-md-8"></div>
+        </div>
+    </div>
+    <div ng-show="mode == 'products'">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" ng-click="back_to_choose_shop_mode()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Поиск по магазину {{ selected_shop_name }}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default">Поиск</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!--<p class=""></p>-->
+            </div>
+        </div>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
