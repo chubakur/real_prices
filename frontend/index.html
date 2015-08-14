@@ -19,7 +19,7 @@
         <div ng-show="connection_error" class="alert alert-danger" role="alert">Ошибка соединения с сервером: {{ connection_error_message }}</div>
         <div ng-repeat="shop in shops"  class="row">
             <a href class="thumbnail col-md-4" ng-click="choose_shop(shop.id, shop.name)">
-                <img src="{{ shop.logo }}"/>
+                <img height="150" width="150" class="img-rounded" src="{{ shop.logo }}"/>
             </a>
             <div class="col-md-8"></div>
         </div>
@@ -31,9 +31,9 @@
                     <span class="input-group-btn">
                         <button class="btn btn-info" ng-click="back_to_choose_shop_mode()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
                     </span>
-                    <input type="text" class="form-control" placeholder="Поиск по магазину {{ selected_shop_name }}">
+                    <input type="text" class="form-control" ng-model='search_query' placeholder="Поиск по магазину {{ selected_shop_name }}">
                     <span class="input-group-btn">
-                        <button class="btn btn-default">Поиск</button>
+                        <button class="btn btn-default" ng-click="alert2(search_query)">Поиск</button>
                     </span>
                 </div>
             </div>

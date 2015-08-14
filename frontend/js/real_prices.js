@@ -27,16 +27,20 @@ realPricesApp.controller('IndexController', function ($scope, $http, $log){
         $scope.connection_error_message = response;
     });
 
+    $scope.alert2 = function (data) {
+        alert(data);
+    };
+
     $scope.choose_shop = function (id, name) {
         $log.info("Choosed shop: " + id + " " + name);
         $scope.selected_shop_id = id;
         $scope.selected_shop_name = name;
         $scope.mode = 'products';
-    }
+    };
 
     $scope.back_to_choose_shop_mode = function() {
         $scope.selected_shop_id = undefined;
         $scope.selected_shop_name = undefined;
         $scope.mode = 'choose_shop';
-    }
+    };
 });
