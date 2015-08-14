@@ -35,7 +35,7 @@ class Product(models.Model):
         return self.name
 
     def __unicode__(self):
-        return str(self)
+        return self.name
 
     def data(self):
         return {
@@ -52,8 +52,15 @@ class Price(models.Model):
     price = models.FloatField()
     price2 = models.FloatField()
 
+    def __str__(self):
+        return u"%s: %d %d" % (unicode(self.product), self.price, self.price2)
+
+    def __unicode__(self):
+        return u"1"
+
     def data(self):
         return {
             'price': self.price,
             'price2': self.price2
         }
+

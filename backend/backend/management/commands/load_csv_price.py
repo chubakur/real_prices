@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         selected_shop = Shop.objects.get(pk=options['shop_id'])
-        print selected_shop
+        print unicode(selected_shop)
         reader = csv.DictReader(options['csv_file'])
         new_products = 0
         new_prices = 0
