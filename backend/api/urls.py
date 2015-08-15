@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-import api
+import controller
 
 
 urlpatterns = [
-    url(r'^products', api.products_in_shop),
-    url(r'^shops', api.shops),
+    url(r'^products', controller.products_in_shop),
+    url(r'^shops', controller.shops),
     url(r'^admin/', include(admin.site.urls)),
 ]

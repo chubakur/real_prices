@@ -45,8 +45,7 @@
         <table ng-show="!connection_error" class="table table-bordered table-hover">
             <tr ng-repeat="product in products">
                 <td><a href="{{ product.url }}" target="_blank">{{ product.name }}</a></td>
-                <!--<td>{{ product.description }}</td>-->
-                <td><img class="img-thumbnail" height="50" width="50" src="{{ product.logo }}" /></td>
+                <td><img class="img-thumbnail" height="100" width="100" src="{{ product.logo }}" /></td>
                 <td>
                     <s ng-show="product.prices[0].price != product.prices[0].price2">{{product.prices[0].price}}</s>
                     {{product.prices[0].price2}}
