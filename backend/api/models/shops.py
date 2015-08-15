@@ -7,6 +7,10 @@ class Shop(models.Model):
     url = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     logo = models.CharField(max_length=200, null=True)
+    crawler_id = models.CharField(max_length=36, null=True)
+
+    def products(self):
+        return Product.objects.filter(shop=self)
 
     def __str__(self):
         return self.name
@@ -36,6 +40,9 @@ class Product(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def prices(self):
+        return Price.objects.filter(product=self).order_by('-created')
 
     def data(self):
         return {

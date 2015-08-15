@@ -2,6 +2,7 @@ from django.core.management import BaseCommand
 from .. import Shop, Product, Price
 import argparse
 import csv
+from . import str_to_number
 
 
 class Command(BaseCommand):
@@ -27,8 +28,10 @@ class Command(BaseCommand):
             if created:
                 new_products += 1
             last_price = Price.objects.filter(product=product).order_by('-created')[0:1]
-            if not last_price or last_price[0].price != float(i['price']) or last_price[0].price2 != float(i['price2']):
-                new_price = Price(product=product, price=i['price'], price2=i['price2'])
+            if not last_price \
+                    or last_price[0].price != str_to_number(i['price'])\
+                    or last_price[0].price2 != str_to_number(i['price2']):
+                new_price = Price(product=product, price=str_to_number(i['price']), price2=str_to_number(i['price2']))
                 new_prices += 1
                 new_price.save()
         print "New products:", new_products
