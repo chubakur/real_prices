@@ -20,14 +20,10 @@ def shops(request):
 
 
 @custom_headers
-def products_in_shop(requst):
-    if 'shop_id' not in requst.GET:
-        return HttpResponse(dumps({'error': 'shop_id required'}))
-    _products = Product.objects.filter(shop=int(requst.GET['shop_id']))
-    # products_view = [o.data() for o in _products]
-    # for product_view in products_view:
-    #     product_view['prices'] = [p.data() for p in Price.objects.filter(product=o).order_by('-created')]
-    # return HttpResponse(dumps(products_view), content_type='application/json')
+def products_in_shop(request):
+    if 'shop_id' not in request.GET or 'query' not in request.GET:
+        return HttpResponse(dumps({'error': 'shop_id and query are required'}))
+    _products = Product.objects.filter(shop=int(request.GET['shop_id']), name__icontains=request.GET['query'])
     return HttpResponse(dumps([dict(chain(o.data().items(),
                                           [('prices',
                                             [p.data() for p in Price.objects.filter(product=o).order_by('-created')])]

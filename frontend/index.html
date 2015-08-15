@@ -31,9 +31,9 @@
                     <span class="input-group-btn">
                         <button class="btn btn-info" ng-click="back_to_choose_shop_mode()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
                     </span>
-                    <input type="text" class="form-control" ng-model='search_query' placeholder="Поиск по магазину {{ selected_shop_name }}">
+                    <input type="text" class="form-control" ng-submit="search_products(search_query)" ng-model='search_query' placeholder="Поиск по магазину {{ selected_shop_name }}">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="alert2(search_query)">Поиск</button>
+                        <button class="btn btn-default" ng-click="search_products(search_query)">Поиск</button>
                     </span>
                 </div>
             </div>
@@ -45,7 +45,7 @@
         <table ng-show="!connection_error" class="table table-bordered table-hover">
             <tr ng-repeat="product in products">
                 <td><a href="{{ product.url }}" target="_blank">{{ product.name }}</a></td>
-                <td><img class="img-thumbnail" height="100" width="100" src="{{ product.logo }}" /></td>
+                <td><img ng-repeat="image in product.logo.split(';')" class="img-thumbnail" height="100" width="100" src="{{ image }}" /></td>
                 <td>
                     <s ng-show="product.prices[0].price != product.prices[0].price2">{{product.prices[0].price}}</s>
                     {{product.prices[0].price2}}

@@ -32,14 +32,18 @@ realPricesApp.controller('IndexController', function ($scope, $http, $log){
         $scope.selected_shop_id = id;
         $scope.selected_shop_name = name;
         $scope.mode = 'products';
-        //$http.get(domain + '/products', { params: { shop_id: id }}).success(function (response){
-        //    $scope.products = response;
-        //}).error(function (response) {
-        //    $log.error(response);
-        //    $scope.connection_error = true;
-        //    $scope.connection_error_message = response;
-        //});
     };
+
+    $scope.search_products = function (query){
+        $http.get(domain + '/products',
+            { params: { shop_id: $scope.selected_shop_id, query: query }}).success(function (response){
+            $scope.products = response;
+        }).error(function (response) {
+            $log.error(response);
+            $scope.connection_error = true;
+            $scope.connection_error_message = response;
+        });
+    }
 
     $scope.back_to_choose_shop_mode = function() {
         $scope.selected_shop_id = undefined;
