@@ -31,18 +31,12 @@ class Command(BaseCommand):
             })
             if not csv_price or not csv_price2:
                 continue
-            if created:
-                new_products += 1
+            if created or (not created and csv_price != product.price or csv_price2 != product.price2):
+                new_products += created
                 new_price = Price(product=product, price=csv_price, price2=csv_price2)
                 product.price = csv_price
                 product.price2 = csv_price2
                 new_prices += 1
-                product.save()
-                new_price.save()
-            elif csv_price != product.price or csv_price2 != product.price2:
-                product.price = csv_price
-                product.price2 = csv_price2
-                new_price = Price(product=product, price=csv_price, price2=csv_price2)
                 product.save()
                 new_price.save()
 

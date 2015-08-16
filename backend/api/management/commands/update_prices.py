@@ -34,8 +34,7 @@ class Command(BaseCommand):
                 result = message['data']['results'][0]
                 price = str_to_number(result['price'])
                 price2 = str_to_number(result['price2'])
-                if _product.price != price \
-                        or _product.price2 != price2:
+                if _product.price != price or _product.price2 != price2:
                     _new_price = Price(product=_product, price=price,
                                        price2=price2)
                     _product.price = price
