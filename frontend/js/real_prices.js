@@ -43,7 +43,7 @@ realPricesApp.controller('IndexController', function ($scope, $http, $log){
             $scope.connection_error = true;
             $scope.connection_error_message = response;
         });
-    }
+    };
 
     $scope.back_to_choose_shop_mode = function() {
         $scope.selected_shop_id = undefined;

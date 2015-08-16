@@ -18,7 +18,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         selected_shop = Shop.objects.get(pk=options['shop_id'])
         print unicode(selected_shop)
-        products = selected_shop.products()
+        products = selected_shop.products.all()
         client = importio.importio(user_id=settings.IMPORTIO['guid'], api_key=settings.IMPORTIO['key'])
         client.connect()
 
@@ -31,18 +31,16 @@ class Command(BaseCommand):
             if message['type'] == 'MESSAGE':
                 _url = message['data']['pageUrl']
                 _product = Product.objects.get(url=_url)
-                _prices = _product.prices()
                 result = message['data']['results'][0]
-                if _prices:
-                    _last_price = _prices[0]
-                    if _last_price.price != str_to_number(result['price']) \
-                            or _last_price.price2 != str_to_number(result['price2']):
-                        _new_price = Price(product=_product, price=str_to_number(result['price']),
-                                           price2=str_to_number(result['price2']))
-                        _new_price.save()
-                else:
-                    _new_price = Price(product=_product, price=str_to_number(result['price']),
-                                       price2=str_to_number(result['price2']))
+                price = str_to_number(result['price'])
+                price2 = str_to_number(result['price2'])
+                if _product.price != price \
+                        or _product.price2 != price2:
+                    _new_price = Price(product=_product, price=price,
+                                       price2=price2)
+                    _product.price = price
+                    _product.price2 = price2
+                    _product.save()
                     _new_price.save()
             if query.finished():
                 lock.countdown()

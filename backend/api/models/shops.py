@@ -9,9 +9,6 @@ class Shop(models.Model):
     logo = models.CharField(max_length=200, null=True)
     crawler_id = models.CharField(max_length=36, null=True)
 
-    def products(self):
-        return Product.objects.filter(shop=self)
-
     def __str__(self):
         return self.name
 
@@ -33,16 +30,15 @@ class Product(models.Model):
     url = models.CharField(max_length=1024)
     logo = models.CharField(max_length=1024, null=True)
     created = models.DateTimeField(auto_now_add=True)
-    shop = models.ForeignKey(Shop)
+    shop = models.ForeignKey(Shop, related_name='products')
+    price = models.FloatField(null=True)
+    price2 = models.FloatField(null=True)
 
     def __str__(self):
         return self.name
 
     def __unicode__(self):
         return self.name
-
-    def prices(self):
-        return Price.objects.filter(product=self).order_by('-created')
 
     def data(self):
         return {
@@ -54,7 +50,7 @@ class Product(models.Model):
 
 
 class Price(models.Model):
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, related_name='prices')
     created = models.DateTimeField(auto_now_add=True)
     price = models.FloatField()
     price2 = models.FloatField()

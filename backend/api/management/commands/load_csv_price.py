@@ -19,21 +19,25 @@ class Command(BaseCommand):
         new_products = 0
         new_prices = 0
         for i in reader:
+            csv_price = str_to_number(i['price'])
+            csv_price2 = str_to_number(i['price2'])
             product, created = Product.objects.get_or_create(url=i['_pageUrl'], defaults={
                 'name': i['name'],
                 'logo': i['logo'],
                 'description': i['description'],
-                'shop': selected_shop
+                'shop': selected_shop,
+                'price': csv_price,
+                'price2': csv_price2
             })
             if created:
                 new_products += 1
-            last_price = Price.objects.filter(product=product).order_by('-created')[0:1]
-            if not last_price \
-                    or last_price[0].price != str_to_number(i['price'])\
-                    or last_price[0].price2 != str_to_number(i['price2']):
-                new_price = Price(product=product, price=str_to_number(i['price']), price2=str_to_number(i['price2']))
-                new_prices += 1
-                new_price.save()
+                if product.price != csv_price or product.price2 != csv_price2:
+                    new_price = Price(product=product, price=csv_price, price2=csv_price2)
+                    product.price = csv_price
+                    product.price2 = csv_price2
+                    new_prices += 1
+                    product.save()
+                    new_price.save()
         print "New products:", new_products
         print "New prices:", new_prices
 
