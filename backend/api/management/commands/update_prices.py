@@ -4,6 +4,12 @@ from importio import importio, latch
 from .. import Shop, Price, Product
 from sys import stdout
 from . import str_to_number
+import logging
+
+logger = logging.getLogger('MSGHDLR')
+handler = logging.FileHandler('msg_hdlr.log')
+handler.setFormatter(logging.Formatter('%(asctime)s %(module)s %(message)s'))
+logger.addHandler(handler)
 
 
 def create_query(connector_id, url):
@@ -29,18 +35,21 @@ class Command(BaseCommand):
 
         def callback(query, message):
             if message['type'] == 'MESSAGE':
-                _url = message['data']['pageUrl']
-                _product = Product.objects.get(url=_url)
-                result = message['data']['results'][0]
-                price = str_to_number(result['price'])
-                price2 = str_to_number(result['price2'])
-                if _product.price != price or _product.price2 != price2:
-                    _new_price = Price(product=_product, price=price,
-                                       price2=price2)
-                    _product.price = price
-                    _product.price2 = price2
-                    _product.save()
-                    _new_price.save()
+                if 'pageUrl' in message['data']:
+                    _url = message['data']['pageUrl']
+                    _product = Product.objects.get(url=_url)
+                    result = message['data']['results'][0]
+                    price = str_to_number(result['price'])
+                    price2 = str_to_number(result['price2'])
+                    if _product.price != price or _product.price2 != price2:
+                        _new_price = Price(product=_product, price=price,
+                                           price2=price2)
+                        _product.price = price
+                        _product.price2 = price2
+                        _product.save()
+                        _new_price.save()
+                else:
+                    logger.error(message)
             if query.finished():
                 lock.countdown()
                 print '\r%d/%d' % (len(products) - lock.count, len(products)),
