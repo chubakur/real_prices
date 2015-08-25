@@ -86,8 +86,8 @@ DATABASES = {
 
 
 IMPORTIO = {
-    'guid': 'fe765d47-7b3c-4896-9c03-df4162093f56',
-    'key': 'fe765d477b3c48969c03df4162093f56a0ad52109444b9d22c63b1edae2b21288f52304ec2e6ff8cf068e9cc08b534b20bd9886b19de85f9d5440918918c0e952bf627b82f569925663ba48804144be6'
+    'guid': '',
+    'key': ''
 }
 
 

@@ -33,6 +33,14 @@ class Product(models.Model):
     shop = models.ForeignKey(Shop, related_name='products')
     price = models.FloatField(null=True)
     price2 = models.FloatField(null=True)
+    not_found = models.BooleanField(default=False, null=False)
+    in_queue = models.BooleanField(default=False, null=False)
+
+    def update_price(self, prices):
+        price, price2 = prices
+        if price != self.price or price2 != self.price2:
+            self.price, self.price2 = price, price2
+            return Price(price=price, price2=price2, product=self)
 
     def __str__(self):
         return self.name

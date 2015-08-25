@@ -3,7 +3,7 @@ from models import Shop, Product, Price
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_filter = ('shop',)
+    list_filter = ('shop', 'not_found')
     search_fields = ('name', )
 
 admin.site.register(Shop)
