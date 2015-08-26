@@ -37,7 +37,10 @@ realPricesApp.controller('IndexController', function ($scope, $http, $log){
     $scope.search_products = function (query){
         $http.get(domain + '/products',
             { params: { shop_id: $scope.selected_shop_id, query: query }}).success(function (response){
-            $scope.products = response;
+                $scope.products = response;
+                for(var product in $scope.products){
+                    product.prices = [];
+                }
         }).error(function (response) {
             $log.error(response);
             $scope.connection_error = true;
@@ -50,5 +53,17 @@ realPricesApp.controller('IndexController', function ($scope, $http, $log){
         $scope.selected_shop_name = undefined;
         $scope.mode = 'choose_shop';
         $scope.products = [];
+    };
+
+    $scope.history_prices = function (product) {
+        $http.get(domain + '/prices', {
+            params: {
+                product_id: product.id
+            }
+        }).success(function (response){
+            product.prices = response;
+        }).error(function (response){
+            $log.error(response);
+        });
     };
 });

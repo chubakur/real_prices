@@ -20,6 +20,7 @@ import controller
 
 urlpatterns = [
     url(r'^products', controller.products_in_shop),
+    url(r'^prices', controller.history_prices),
     url(r'^shops', controller.shops),
     url(r'^admin/', include(admin.site.urls)),
 ]

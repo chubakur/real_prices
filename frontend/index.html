@@ -47,8 +47,14 @@
                 <td><a href="{{ product.url }}" target="_blank">{{ product.name }}</a></td>
                 <td><img ng-repeat="image in product.logo.split(';')" class="img-thumbnail" height="100" width="100" src="{{ image }}" /></td>
                 <td>
-                    <s ng-show="product.prices[0].price != product.prices[0].price2">{{product.prices[0].price}}</s>
-                    {{product.prices[0].price2}}
+                    <s ng-show="product.price != product.price2">{{product.price}}</s>
+                    {{product.price2}}<span class="glyphicon glyphicon-list-alt" ng-click="history_prices(product)"></span>
+                    <table ng-show="product.prices.length > 0" class="table">
+                        <tr ng-repeat="price in product.prices">
+                            <td>{{price.created}}</td>
+                            <td><s ng-show="price.price != price.price2">{{price.price}}</s>&nbsp;&nbsp;&nbsp;{{price.price2}}</td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>

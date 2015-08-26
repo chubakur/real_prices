@@ -50,10 +50,13 @@ class Product(models.Model):
 
     def data(self):
         return {
+            'id': self.id,
             'name': self.name,
             'description': self.description,
             'url': self.url,
-            'logo': self.logo
+            'logo': self.logo,
+            'price': self.price,
+            'price2': self.price2
         }
 
 
@@ -72,6 +75,7 @@ class Price(models.Model):
     def data(self):
         return {
             'price': self.price,
-            'price2': self.price2
+            'price2': self.price2,
+            'created': self.created.strftime("%d.%m.%Y")
         }
 
