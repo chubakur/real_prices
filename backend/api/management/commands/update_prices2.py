@@ -86,7 +86,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         shop = Shop.objects.get(pk=options['shop_id'])
-        print unicode(shop.name)
+        print unicode(shop)
         Product.objects.filter(shop=shop).update(in_queue=False)
         package_size = options['package_size']
         total = 0
